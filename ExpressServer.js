@@ -75,6 +75,20 @@ connectDB().then(db => {
         }
     });
 
+    // Endpoint para eliminar un dato en la colección Hogueras
+    app.delete('/hogueras/delete/:id', async (req, res) => {
+        try {
+            const id = req.params.id;
+            const result = await db.collection('Hogueras').deleteOne({ _id: new ObjectId(id) });
+            if (result.deletedCount === 0) {
+                return res.status(404).send('Documento no encontrado.');
+            }
+            res.json(result);
+        } catch (err) {
+            res.status(500).send('Error al eliminar el documento. ' + err);
+        }
+    });
+
     // Endpoint para obtener la colección participantes
     app.get('/participantes', async (req, res) => {
         try {
