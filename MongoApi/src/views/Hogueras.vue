@@ -1,11 +1,14 @@
+// MongoApi/src/views/Hogueras.vue
 <script setup>
 import { ref, onMounted } from 'vue'
 import EditModal from '../components/EditModal.vue'
+import AddModal from '../components/AddModal.vue'
 
 const hogueras = ref([])
 const error = ref('')
 const modalVisible = ref(false)
 const selectedItem = ref(null)
+const addModalVisible = ref(false)
 
 const fetchHogueras = async () => {
   try {
@@ -46,6 +49,18 @@ const deleteItem = async (item, event) => {
   }
 }
 
+const openAddModal = () => {
+  addModalVisible.value = true
+}
+
+const closeAddModal = () => {
+  addModalVisible.value = false
+}
+
+const addItemToList = (newItem) => {
+  hogueras.value.push(newItem)
+}
+
 onMounted(() => {
   fetchHogueras()
 })
@@ -68,7 +83,9 @@ onMounted(() => {
         </li>
       </ul>
     </div>
+    <button class="add-btn" @click="openAddModal">Agregar nuevo ítem</button>
     <EditModal :visible="modalVisible" :item="selectedItem" @close="closeModal" @updated="updateItem" />
+    <AddModal :visible="addModalVisible" @close="closeAddModal" @added="addItemToList" />
   </div>
 </template>
 
@@ -77,8 +94,8 @@ h1 {
   text-align: center;
   margin-bottom: 1rem;
 }
+
 .scroll-container {
-  height: calc(2 * 150px + 1rem);
   overflow-y: auto;
 }
 .grid-container {
@@ -106,6 +123,13 @@ p {
   right: 0.2rem;
   background: transparent;
   border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.add-btn {
+  display: block;
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
 }
