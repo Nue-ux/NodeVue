@@ -1,11 +1,17 @@
-const express = require('express');
-const { MongoClient, ObjectId } = require('mongodb');
+import express from 'express';
+import { MongoClient, ObjectId } from 'mongodb';
+import cors from 'cors';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 //const uri = 'mongodb://localhost:27017';
 const uri = 'mongodb+srv://lsantacru:RgjSVAf3MXPv604y@cluster0.4jypsnv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
@@ -15,7 +21,6 @@ const client = new MongoClient(uri);
 async function connectDB() {
     try {
         await client.connect();
-        // Seleccionar la base de datos IslaDB
         const db = client.db('IslaDB');
         return db;
     } catch (err) {
