@@ -105,6 +105,52 @@ connectDB().then(db => {
         }
     });
 
+    app.post('/participantes/insert', async (req, res) => {
+        try {
+            const document = req.body;
+            if (!document || Object.keys(document).length === 0) {
+                return res.status(400).send('Se requieren datos para la inserción.');
+            }
+            const result = await db.collection('Participantes').insertOne(document);
+            res.status(201).json(result);
+        } catch (err) {
+            res.status(500).send('Error al insertar el documento.');
+        }
+    });
+    
+    app.put('/participantes/edit/:id', async (req, res) => {
+        try {
+            const id = req.params.id;
+            const updatedData = req.body;
+            if (!updatedData || Object.keys(updatedData).length === 0) {
+                return res.status(400).send('Se requieren datos para la actualización.');
+            }
+            const result = await db.collection('Participantes').updateOne(
+                { _id: new ObjectId(id) },
+                { $set: updatedData }
+            );
+            if (result.matchedCount === 0) {
+                return res.status(404).send('Documento no encontrado.');
+            }
+            res.json(result);
+        } catch (err) {
+            res.status(500).send('Error al editar el documento. ' + err);
+        }
+    });
+    
+    app.delete('/participantes/delete/:id', async (req, res) => {
+        try {
+            const id = req.params.id;
+            const result = await db.collection('Participantes').deleteOne({ _id: new ObjectId(id) });
+            if (result.deletedCount === 0) {
+                return res.status(404).send('Documento no encontrado.');
+            }
+            res.json(result);
+        } catch (err) {
+            res.status(500).send('Error al eliminar el documento. ' + err);
+        }
+    });
+
     // Iniciar el servidor Express
     app.listen(port, () => {
         console.log(`Servidor Express corriendo en el puerto ${port}`);
