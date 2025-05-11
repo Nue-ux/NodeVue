@@ -156,3 +156,7 @@ connectDB().then(db => {
         console.log(`Servidor Express corriendo en el puerto ${port}`);
     });
 });
+
+
+// node ExpressServer.js
+// npm run dev
