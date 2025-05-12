@@ -81,13 +81,13 @@ const addItem = async () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(249, 249, 249, 0.24);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .modal {
-  background: #fff;
+  background: #000000;
   padding: 1rem;
   border-radius: 5px;
   width: 300px;
