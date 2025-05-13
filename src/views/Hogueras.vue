@@ -1,4 +1,3 @@
-// MongoApi/src/views/Hogueras.vue
 <script setup>
 import { ref, onMounted } from 'vue'
 import EditModal from '../components/EditModal.vue'
@@ -97,6 +96,7 @@ h1 {
 
 .scroll-container {
   overflow-y: auto;
+  height: 72vh;
 }
 .grid-container {
   display: grid;
@@ -132,5 +132,16 @@ p {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.scroll-container {
+  overflow-y: auto;
+  height: 72vh;
+  -ms-overflow-style: none;  /* IE y Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari y Opera */
 }
 </style>

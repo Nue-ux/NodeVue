@@ -1,18 +1,13 @@
 <script setup>
 </script>
-<style>
-
-.logo {
-  transform: rotate(180deg)}
-</style>
 <template>
   <header>
     
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
     <nav>
-      <router-link to="/">Home</router-link>
-      <router-link to="/hogueras">Hogueras</router-link>
-      <router-link to="/participantes">Participantes</router-link>
+      <router-link to="/"><span>Home</span></router-link>
+      <router-link to="/hogueras"><span>Hogueras</span></router-link>
+      <router-link to="/participantes"><span>Participantes</span></router-link>
     </nav>
   </header>
   <main>
@@ -32,5 +27,12 @@ nav {
   display: flex;
   gap: 1rem;
   justify-content: center;
+}
+
+.logo {
+  transform: rotate(180deg)}
+
+span {
+  color: #ffa500;
 }
 </style>

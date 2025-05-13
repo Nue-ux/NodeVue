@@ -84,3 +84,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: #ffa500;
+    color: var(--color-text);
+    font-size: inherit;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        background-color 0.2s,
+        color 0.2s,
+        transform 0.2s;
+}

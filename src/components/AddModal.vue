@@ -1,4 +1,3 @@
-// MongoApi/src/components/AddModal.vue
 <script setup>
 import { ref } from 'vue'
 

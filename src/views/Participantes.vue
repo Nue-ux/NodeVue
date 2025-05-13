@@ -1,60 +1,7 @@
-<template>
-  <div>
-    <h1>Participantes</h1>
-    <div v-if="error">Error: {{ error }}</div>
-    <div v-else class="scroll-container">
-      <ul class="grid-container">
-        <li
-          v-for="item in participantes"
-          :key="item._id"
-          class="grid-item"
-          @click="openModal(item)"
-        >
-          <button class="delete-btn" @click="deleteItem(item, $event)">X</button>
-          <p><strong>ID:</strong> {{ item._id }}</p>
-          <p><strong>Nombre:</strong> {{ item.nombre }}</p>
-          <p><strong>Edad:</strong> {{ item.edad }}</p>
-          <p><strong>Ciudad:</strong> {{ item.ciudad }}</p>
-          <p><strong>Estado:</strong> {{ item.estado_actual }}</p>
-          <p>
-            <strong>Pareja:</strong>
-            {{ item.pareja ? item.pareja : 'Sin pareja' }}
-          </p>
-          <p>
-            <strong>Tentaciones:</strong>
-            <span v-if="item.tentaciones && item.tentaciones.length">
-              <span v-for="(t,index) in item.tentaciones" :key="index">
-                {{ t.nombre }} ({{ t.edad }} años, compatibilidad {{ t.compatibilidad }})
-                <span v-if="index < item.tentaciones.length - 1">, </span>
-              </span>
-            </span>
-            <span v-else>Ninguna</span>
-          </p>
-          <p><strong>Infidelidades:</strong> {{ item.infidelidades }}</p>
-        </li>
-      </ul>
-    </div>
-    <button class="add-btn" @click="openAddModal">
-      Agregar nuevo participante
-    </button>
-    <EditModal
-      :visible="modalVisible"
-      :item="selectedItem"
-      @close="closeModal"
-      @updated="updateItem"
-    />
-    <AddModal
-      :visible="addModalVisible"
-      @close="closeAddModal"
-      @added="addItemToList"
-    />
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted } from 'vue'
-import EditModal from '../components/EditModal.vue'
-import AddModal from '../components/AddModal.vue'
+import EditParticipante from '../components/EditParticipante.vue'
+import AddParticipante from '../components/AddParticipante.vue'
 
 const participantes = ref([])
 const error = ref('')
@@ -73,7 +20,7 @@ const fetchParticipantes = async () => {
 }
 
 const openModal = (item) => {
-  selectedItem.value = item
+  selectedItem.value = JSON.parse(JSON.stringify(item))
   modalVisible.value = true
 }
 
@@ -118,6 +65,55 @@ onMounted(() => {
 })
 </script>
 
+<template>
+  <div>
+    <h1>Participantes</h1>
+    <div v-if="error">Error: {{ error }}</div>
+    <div v-else class="scroll-container">
+      <ul class="grid-container">
+        <li
+            v-for="item in participantes"
+            :key="item._id"
+            class="grid-item"
+            @click="openModal(item)"
+        >
+          <button class="delete-btn" @click="deleteItem(item, $event)">X</button>
+          <p><strong>ID:</strong> {{ item._id }}</p>
+          <p><strong>Nombre:</strong> {{ item.nombre }}</p>
+          <p><strong>Edad:</strong> {{ item.edad }}</p>
+          <p><strong>Ciudad:</strong> {{ item.ciudad }}</p>
+          <p><strong>Estado:</strong> {{ item.estado_actual }}</p>
+          <p><strong>Pareja:</strong> {{ item.pareja ? item.pareja : 'Sin pareja' }}</p>
+          <p>
+            <strong>Tentaciones:</strong>
+            <span v-if="item.tentaciones && item.tentaciones.length">
+              <span v-for="(t,index) in item.tentaciones" :key="index">
+                {{ t.nombre }} ({{ t.edad }} años, compatibilidad {{ t.compatibilidad }})
+                <span v-if="index < item.tentaciones.length - 1">, </span>
+              </span>
+            </span>
+            <span v-else>Ninguna</span>
+          </p>
+          <p><strong>Infidelidades:</strong> {{ item.infidelidades }}</p>
+        </li>
+      </ul>
+    </div>
+    <button class="add-btn" @click="openAddModal">Agregar nuevo participante</button>
+
+    <EditParticipante
+        :visible="modalVisible"
+        :item="selectedItem"
+        @close="closeModal"
+        @updated="updateItem"
+    />
+    <AddParticipante
+        :visible="addModalVisible"
+        @close="closeAddModal"
+        @added="addItemToList"
+    />
+  </div>
+</template>
+
 <style scoped>
 h1 {
   text-align: center;
@@ -126,7 +122,15 @@ h1 {
 
 .scroll-container {
   overflow-y: auto;
+  height: 72vh;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -164,4 +168,3 @@ p {
   cursor: pointer;
 }
 </style>
-
