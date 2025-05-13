@@ -45,15 +45,15 @@ const removeTentacion = (index) => {
 
 const saveItem = async () => {
   try {
-    if (form.value._id) {
-      const res = await fetch(`http://localhost:3000/participantes/update/${form.value._id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form.value)
-      })
-      if (!res.ok) throw new Error('Error al actualizar participante')
-      await res.json()
-    } else {
+    // if (form.value._id) {
+    //   const res = await fetch(`http://localhost:3000/participantes/edit/${form.value._id}`, {
+    //     method: 'PUT',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify(form.value)
+    //   })
+    //   if (!res.ok) throw new Error('Error al actualizar participante')
+    //   await res.json()
+    // } else {
       console.log('Adding new participant:', form.value);
       const res = await fetch(`http://localhost:3000/participantes/insert`, {
         method: 'POST',
@@ -67,7 +67,7 @@ const saveItem = async () => {
 
       // Asegurar que se asigna el _id
       form.value._id = result.insertedId || result._id || form.value._id
-    }
+    //}
     emits('added', { ...form.value })
     closeModal()
   } catch (err) {

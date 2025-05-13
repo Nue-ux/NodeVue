@@ -43,8 +43,8 @@ const removeTentacion = (index) => {
 
 const updateItem = async () => {
   try {
-    console.log('Updating item:', form.value)
-    const res = await fetch(`http://localhost:3000/participantes/update/${form.value._id}`, {
+    console.log('form.value:', form.value)
+    const res = await fetch(`http://localhost:3000/participantes/edit/${form.value._id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form.value)
