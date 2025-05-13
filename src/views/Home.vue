@@ -3,9 +3,9 @@
 
 <template>
   <div class="home-container">
-    <h1>Grupo dinamita</h1>
+    <h1>Grupo dinoverga</h1>
     <p>
-      Aqui pon los integrantes del grupo y le pones una cantidad de css para que se vea bien :v
+      Grupo dinoverga esta compuesto por el mayor mamador de pollas llamado (Lenin Daniel Santacruz Rodriguez Chacón 3r de la Huerta), Joan Corominas y Daniel Civico
     </p>
   </div>
 </template>
